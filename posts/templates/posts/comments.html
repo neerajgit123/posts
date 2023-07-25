@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+<h3 class="text-center">Comments</h3>
+<div class="row">
+<div class="col-sm-3"></div>
+<div class="col-sm-6">
+   <form action="" method="POST">
+      {% csrf_token %}
+      <br>
+      <h3>Leave Comment</h3>
+      <br>
+      Comment : <input type="textarea" id="comment" name="comment" size="70">
+      <input type="submit" value="submit" class="btn btn-success">
+   </form>
+   {% for po in comments %}
+   <div class="card">
+      <div class="card-header" style="display:inline-block">
+         {{forloop.counter}} comment --
+         Create at : {{po.created_at}}
+      </div>
+      <div class="card-body">
+         <h5 class="card-title">User : {{po.user.username}}</h5>
+         <p class="card-text">{{po.comment}}</p>
+         {% if request.user == po.user %}
+         <a href="{% url 'comment-delete-view' pk=po.id%}" class="btn btn-danger">Delete</a>
+         {% endif %}
+      </div>
+      {% endfor %}
+      <div class="col-sm-3"></div>
+   </div>
+   <br>
+   <br>
+</div>
+{% endblock content %}

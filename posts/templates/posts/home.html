@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+<h3 class="text-center">Posts</h3>
+<div class="row">
+<div class="col-sm-3"></div>
+<div class="col-sm-6">
+   {% for po in posts %}
+   <div class="card">
+      <div class="card-header " style="display:inline-block">
+         <img src="{{po.user.profile.url}}" class="profile_image" style="margin-right: 10px">   
+         {{po.user.username}} 
+      </div>
+      <div class="card-body">
+         <img class="card-img-top" src="{{po.image.url}}"  width="50" height="400" alt="Card image cap">
+         <h5 class="card-title">{{po.title}}</h5>
+         <p class="card-text">{{po.desciption}}</p>
+         <div class="row">
+            {% if request.user == po.user %}
+            <div class="col-sm-3">
+               <a href="{% url 'post-like-view' post_id=po.id %}" class="btn btn-primary">Like</a>
+               <br>
+               <strong>{{po.likes_count}} likes</strong>
+            </div>
+            <div class="col-sm-3">
+               <a href="{% url 'post-dislike-view' post_id=po.id %}" class="btn btn-primary">Dislikes</a>
+               <br>
+               <strong>{{po.dislikes_count}} dislikes</strong>
+            </div>
+            <div class="col-sm-3">
+               <a href="{% url 'post-comments-view' post_id=po.id  %}" class="btn btn-primary">Comments</a>
+               <br>
+               <strong>{{po.total_comments}} comments</strong>
+            </div>
+            <div class="col-sm-3">
+               <a href="{% url 'post-update-view' pk=po.id  %}" class="btn-primary">Update</a>
+               <a href="{% url 'post-delete-view' pk=po.id  %}" class="btn-danger" >Delete</a>
+            </div>
+            {% else %}
+            <div class="col-sm-4">
+               <a href="{% url 'post-like-view' post_id=po.id %}" class="btn btn-primary">Like</a>
+               <br>
+               <strong>{{po.likes_count}} likes</strong>
+            </div>
+            <div class="col-sm-4">
+               <a href="{% url 'post-dislike-view' post_id=po.id %}" class="btn btn-primary">Dislikes</a>
+               <br>
+               <strong>{{po.dislikes_count}} dislikes</strong>
+            </div>
+            <div class="col-sm-4">
+               <a href="{% url 'post-comments-view' post_id=po.id  %}" class="btn btn-primary">Comments</a>
+               <br>
+               <strong>{{po.total_comments}} comments</strong>
+            </div>
+            {% endif %}
+         </div>
+         <div class="card-footer text-muted">
+            created_at : {{po.created_at.date}} 
+         </div>
+      </div>
+      <hr>
+      <hr>
+      {% endfor %}
+      <div class="col-sm-3"></div>
+   </div>
+   <br>
+   <br>
+</div>
+{% endblock content %}
