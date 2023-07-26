@@ -14,7 +14,7 @@ from .views import (
 )
 
 urlpatterns = [
-    path("home", HomeView.as_view(), name="home-view"),
+    path("", HomeView.as_view(), name="home-view"),
     path("register/", RegisterView.as_view(), name="register-view"),
     path("login/", LoginView.as_view(), name="login-view"),
     path("logout/", LogoutView.as_view(), name="logout-view"),
